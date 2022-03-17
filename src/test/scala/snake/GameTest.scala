@@ -1,7 +1,7 @@
-package org.scalaatlightspeed
-package atlasian
+package org.atlassian
+package snake
 
-import org.atlassian.snake.Game.{Position, SnakeDirection, SnakeGame}
+import snake.Game.{Position, SnakeDirection, SnakeGame}
 import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
