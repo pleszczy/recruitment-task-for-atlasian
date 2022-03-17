@@ -1,0 +1,34 @@
+### JetBrains template
+.idea
+.idea/*
+.bsp
+out/
+
+### Terraform template
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+### SBT template
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
+
+### Scala template
+*.class
+*.log
+
