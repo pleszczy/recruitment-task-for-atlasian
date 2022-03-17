@@ -1,6 +1,7 @@
 package org.atlassian
 package snake
 
+import snake.Game.SnakeDirection
 import snake.Game.SnakeDirection.{DOWN, LEFT, RIGHT, UP}
 
 object Game {
@@ -10,15 +11,13 @@ object Game {
 
 
   trait SnakeGame {
-    val pollPosition = Position(1, 1, 0)
+    def moveSnakeRight: Position => Position
 
-    def moveSnakeToRight: Position => Position
+    def moveSnakeLeft: Position => Position
 
-    def moveSnakeToLeft: Position => Position
+    def moveSnakeUp: Position => Position
 
-    def moveSnakeToUp: Position => Position
-
-    def moveSnakeToDown: Position => Position
+    def moveSnakeDown: Position => Position
 
     def moveSnake(snakeDirection: SnakeDirection, position: Position): Position
 
@@ -28,14 +27,15 @@ object Game {
   case class Position(x: Int, y: Int, noOfMoves: Int)
 
   object SnakeGame extends SnakeGame {
-    def moveSnakeToRight: Position => Position = (position: Position) => moveSnake(SnakeDirection.RIGHT, position)
+    val pollPosition = Position(1, 1, 0)
 
-    def moveSnakeToLeft: Position => Position = (position: Position) => moveSnake(SnakeDirection.LEFT, position)
+    override def moveSnakeRight = position => moveSnake(RIGHT, position)
 
-    def moveSnakeToUp: Position => Position = (position: Position) => moveSnake(SnakeDirection.UP, position)
+    override def moveSnakeLeft = (position: Position) => moveSnake(LEFT, position)
 
-    def moveSnakeToDown: Position => Position = (position: Position) => moveSnake(SnakeDirection.DOWN, position)
+    override def moveSnakeUp = (position: Position) => moveSnake(UP, position)
 
+    override def moveSnakeDown = (position: Position) => moveSnake(DOWN, position)
 
     override def moveSnake(snakeDirection: SnakeDirection, position: Position): Position =
       snakeDirection match

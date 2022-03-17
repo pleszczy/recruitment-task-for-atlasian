@@ -19,45 +19,45 @@ class GameTest extends AnyFlatSpec with should.Matchers with BeforeAndAfter {
 
   it should " not fail if we move 3 times to the right" in {
     val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToRight)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeRight)
 
     SnakeGame.isGameOver(finalPosition) should be(false)
   }
 
   it should " fail if we move 4 times to the right" in {
     val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToRight)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeRight)
 
     SnakeGame.isGameOver(finalPosition) should be(true)
   }
 
   it should " fail if we move 5 times to the right" in {
     val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToRight)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeRight)
 
     SnakeGame.isGameOver(finalPosition) should be(true)
   }
 
   it should " fail if we move 1 times to the left" in {
     val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeToLeft)
+      .pipe(SnakeGame.moveSnakeLeft)
 
     SnakeGame.isGameOver(finalPosition) should be(true)
   }
 
   it should " not fail if we move 1 times to the left" in {
     val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeToRight)
-      .pipe(SnakeGame.moveSnakeToLeft)
+      .pipe(SnakeGame.moveSnakeRight)
+      .pipe(SnakeGame.moveSnakeLeft)
 
     SnakeGame.isGameOver(finalPosition) should be(false)
   }
