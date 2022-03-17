@@ -1,4 +1,4 @@
-# An online recruitment task for Atlasian
+# An online recruitment task for Atlassian
 
 ## Task 1
 
