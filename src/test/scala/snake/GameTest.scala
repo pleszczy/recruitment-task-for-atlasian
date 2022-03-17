@@ -1,7 +1,7 @@
 package org.atlassian
 package snake
 
-import snake.Game.{Position, SnakeDirection, SnakeGame}
+import snake.Game.{Snake, SnakeDirection}
 
 import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
@@ -13,52 +13,68 @@ import scala.util.chaining.*
 
 class GameTest extends AnyFlatSpec with should.Matchers with BeforeAndAfter {
 
-  "Snake game" should " not be over before we even start !!!" in {
-    SnakeGame.isGameOver(SnakeGame.pollPosition) should be(false)
+  "Snake game" should "not be over before we even start !!!" in {
+    Snake().isGameOver should be(false)
   }
 
-  it should " not fail if we move 3 times to the right" in {
-    val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeRight)
-
-    SnakeGame.isGameOver(finalPosition) should be(false)
+  it should " ot fail if we move 3 times to the right" in {
+    Snake()
+      .right()
+      .right()
+      .right()
+      .isGameOver should be(false)
   }
 
-  it should " fail if we move 4 times to the right" in {
-    val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeRight)
-
-    SnakeGame.isGameOver(finalPosition) should be(true)
+  it should "fail if we move 4 times to the right" in {
+    Snake()
+      .right()
+      .right()
+      .right()
+      .right()
+      .isGameOver should be(true)
   }
 
-  it should " fail if we move 5 times to the right" in {
-    val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeRight)
-
-    SnakeGame.isGameOver(finalPosition) should be(true)
+  it should "not fail if we move 1 times to the left" in {
+    Snake()
+      .right()
+      .left()
+      .isGameOver should be(false)
   }
 
-  it should " fail if we move 1 times to the left" in {
-    val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeLeft)
-
-    SnakeGame.isGameOver(finalPosition) should be(true)
+  it should "fail if we move 1 times to the left" in {
+    Snake()
+      .left()
+      .isGameOver should be(true)
   }
 
-  it should " not fail if we move 1 times to the left" in {
-    val finalPosition = SnakeGame.pollPosition
-      .pipe(SnakeGame.moveSnakeRight)
-      .pipe(SnakeGame.moveSnakeLeft)
-
-    SnakeGame.isGameOver(finalPosition) should be(false)
+  it should "not fail if we move 1 times up" in {
+    Snake()
+      .down()
+      .up()
+      .isGameOver should be(false)
   }
+
+  it should "fail if we move 1 times up" in {
+    Snake()
+      .up()
+      .isGameOver should be(true)
+  }
+
+  it should "not fail if we move 3 times down" in {
+    Snake()
+      .down()
+      .down()
+      .down()
+      .isGameOver should be(false)
+  }
+
+  it should "fail if we move 4 times down" in {
+    Snake()
+      .down()
+      .down()
+      .down()
+      .down()
+      .isGameOver should be(true)
+  }
+
 }
