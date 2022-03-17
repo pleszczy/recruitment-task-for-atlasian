@@ -2,7 +2,8 @@
 
 ## Task 1
 
-Implement a snake game.Assume the board looks like this:
+Implement a snake game.
+Assume the board is 4x4 for now:
 ```shell
 [x x x x]
 [x x x x]
@@ -10,9 +11,13 @@ Implement a snake game.Assume the board looks like this:
 [x x x x]
 ```
 
-
 - snake grows by 1 every 5 moves
 - game is over if the snake hits a wall or its tail
+
+### TODO
+- extract previousMove, currentMove to a collection to support tail collision detection for snakes > 4
+- cover cases when snake is larger than 4
+- support custom board sizes
 
 ## Task 2
 
