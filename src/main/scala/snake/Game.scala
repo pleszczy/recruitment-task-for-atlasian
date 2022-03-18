@@ -1,44 +1,41 @@
 package org.atlassian
 package snake
 
-import snake.Game.SnakeDirection
-import snake.Game.SnakeDirection.{DOWN, LEFT, RIGHT, UP, NONE}
+import snake.Game.Move
+
+import scala.math.BigDecimal.RoundingMode.UP
+import scala.util.chaining.*
 
 object Game {
 
-  enum SnakeDirection:
-    case UP, DOWN, LEFT, RIGHT, NONE
+  case class Move(x: Int, y: Int)
 
-  class Snake(val x: Int = 1, val y: Int = 1, val noOfMoves: Int = 0, val gameOver: Boolean = false, val previousMove: SnakeDirection = NONE, val currentMove: SnakeDirection = NONE) {
-    def right() = Snake(x + 1, y, noOfMoves + 1, gameOver, previousMove = currentMove, currentMove = RIGHT)
+  def UP = Move(0, -1)
 
-    def left() = Snake(x - 1, y, noOfMoves + 1, gameOver, previousMove = currentMove, currentMove = LEFT)
+  def DOWN = Move(0, 1)
 
-    def up(): Snake = Snake(x, y - 1, noOfMoves + 1, gameOver, previousMove = currentMove, currentMove = UP)
+  def LEFT = Move(-1, 0)
 
-    def down(): Snake = Snake(x, y + 1, noOfMoves + 1, gameOver, previousMove = currentMove, currentMove = DOWN)
-  }
+  def RIGHT = Move(1, 0)
 
-  object Snake {
-    private def size(noOfMoves: Int): Int = (noOfMoves / 5) + 1
+  def START = Move(1, 1)
 
-    private def isWithinBoundaries(num: Int) = if (num >= 1 && num <= 4) then true else false
+  case class GameBoard(xSize: Int = 4, ySize: Int = 4, moves: Vector[Move] = Vector(START))
 
-    private def isGameOver(nextX: Int, nextY: Int) = !(Snake.isWithinBoundaries(nextX) && Snake.isWithinBoundaries(nextY))
+  class Snake(board: GameBoard = GameBoard()) {
+    def up(): Snake = new Snake(board.copy(moves = board.moves :+ UP))
 
-    def apply(x: Int = 1, y: Int = 1, noOfMoves: Int = 0, gameOver: Boolean = false, previousMove: SnakeDirection = NONE, currentMove: SnakeDirection = NONE): Snake = {
-      val size = Snake.size(noOfMoves)
-      val gameState = calculateGameState(x, y, gameOver, previousMove, currentMove, size)
-      new Snake(x, y, noOfMoves, gameState, previousMove, currentMove)
-    }
+    def down(): Snake = new Snake(board.copy(moves = board.moves :+ DOWN))
 
-    private def calculateGameState(x: Int, y: Int, gameOver: Boolean, previousMove: SnakeDirection, currentMove: SnakeDirection, size: Int) =
-      (previousMove, currentMove) match {
-        case (UP, DOWN) if size > 1 => true
-        case (DOWN, UP) if size > 1 => true
-        case (RIGHT, LEFT) if size > 1 => true
-        case (LEFT, RIGHT) if size > 1 => true
-        case (_, _) => isGameOver(x, y) || gameOver
-      }
+    def left() = new Snake(board.copy(moves = board.moves :+ LEFT))
+
+    def right() = new Snake(board.copy(moves = board.moves :+ RIGHT))
+
+    def isGameOver: Boolean = board
+      .moves
+      .reduce((m1, m2) => Move(m1.x + m2.x, m1.y + m2.y))
+      .pipe(isOutsideBoundaries)
+
+    private def isOutsideBoundaries(finalPos: Move) = finalPos.x < 1 || finalPos.x > board.xSize || finalPos.y < 1 && finalPos.y > board.ySize
   }
 }
