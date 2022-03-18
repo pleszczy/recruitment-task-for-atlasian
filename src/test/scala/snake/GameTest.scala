@@ -1,8 +1,9 @@
 package org.atlassian
 package snake
 
-import snake.Game.*
+import snake.Game.{Move, *}
 
+import org.atlassian.snake.Game.Move.*
 import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.dsl.MatcherWords.be

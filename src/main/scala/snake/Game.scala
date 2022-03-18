@@ -1,24 +1,18 @@
 package org.atlassian
 package snake
 
-import snake.Game.Move
+import snake.Game.Move.*
 
-import scala.math.BigDecimal.RoundingMode.UP
 import scala.util.chaining.*
 
 object Game {
 
-  case class Move(x: Int, y: Int)
-
-  def UP = Move(0, -1)
-
-  def DOWN = Move(0, 1)
-
-  def LEFT = Move(-1, 0)
-
-  def RIGHT = Move(1, 0)
-
-  def START = Move(1, 1)
+  enum Move(val x: Int, val y: Int):
+    case START extends Move(1, 1)
+    case UP extends Move(0, -1)
+    case DOWN extends Move(0, 1)
+    case LEFT extends Move(-1, 0)
+    case RIGHT extends Move(1, 0)
 
   case class GameBoard(xSize: Int = 4, ySize: Int = 4, moves: Vector[Move] = Vector(START))
 
@@ -31,11 +25,13 @@ object Game {
 
     def right() = new Snake(board.copy(moves = board.moves :+ RIGHT))
 
-    def isGameOver: Boolean = board
-      .moves
-      .reduce((m1, m2) => Move(m1.x + m2.x, m1.y + m2.y))
-      .pipe(isOutsideBoundaries)
+    def isGameOver: Boolean = {
+      board
+        .moves
+        .foldLeft((0, 0))((agg, move) => (agg._1 + move.x, agg._2 + move.y))
+        .pipe(isOutsideBoundaries)
+    }
 
-    private def isOutsideBoundaries(finalPos: Move) = finalPos.x < 1 || finalPos.x > board.xSize || finalPos.y < 1 && finalPos.y > board.ySize
+    private def isOutsideBoundaries(finalPos: (Int, Int)) = finalPos._1 < 1 || finalPos._1 > board.xSize || finalPos._2 < 1 && finalPos._2 > board.ySize
   }
 }
