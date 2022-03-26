@@ -15,9 +15,9 @@ Assume the board is 4x4 for now:
 - game is over if the snake hits a wall or its tail
 
 ### TODO
-- extract previousMove, currentMove to a collection to support tail collision detection for snakes > 4
-- cover cases when snake is larger than 4
-- support custom board sizes
+- the game should be over if the game failed on some previous moves
+- refactor test to make creation of tests with longer-sized snakes easier
+- add tests for snake of size >= 4
 
 ## Task 2
 
